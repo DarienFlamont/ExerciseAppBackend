@@ -1,5 +1,11 @@
 #!/bin/bash
 
-#On Windows 10 navigate to the directory of the script and run .\install_dependecies.sh (Make sure you have pip installed on your machine)
+#For Windows 10 enable windows subsystem for linux and download Ubuntu from the windows store
+#https://www.howtogeek.com/249966/how-to-install-and-use-the-linux-bash-shell-on-windows-10/
 
-bash -c "python -m pip install pymongo, dnspython, graphene, Flask"
+#On Windows 10 navigate to the directory of the script and run bash -c "sh insall_dependencies.sh" (Make sure you have pip installed on your machine)
+
+python -m pip install pymongo
+python -m pip install dnspython
+python -m pip install graphene
+python -m pip install Flask

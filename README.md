@@ -1,6 +1,7 @@
-# ExerciseAppBackend
+# Fitness Analytics System: Backend
 
-# Created a cluster using Atlas MongoDB
-# Using PyMongo as our connection to Atlas MongoDB cluster
+## Required installations
+After cloning, run `sh install_dependencies.sh` in the root directory of the project, and you should be good to go!
 
-# Need Python 3.6+, MongoDB driver 
+## Database/Server
+The project uses MongoDB via Atlas, connected to via the PyMongo driver (with a little help from the PyMongo-Flask package), as well as the Flask server framework.

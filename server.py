@@ -10,13 +10,15 @@ app.config['MONGO_URI'] = 'mongodb+srv://Darien:test123@fitnesssystem-wtaxp.mong
 
 mongo = PyMongo(app)
 
+
 @app.route('/user', methods=['GET'])
 def get_all_users():
-	user = mongo.db.test
+	users = mongo.db.users
 	output = []
-	for u in user.find():
+	for u in users.find():
 		output.append({'name' : u['name'], 'weight' : u['weight'], 'height' : u['height']})
 	return jsonify({'result': output})
 
+
 if __name__ == '__main__':
-    app.run(debug=True)
+	app.run(debug=True)

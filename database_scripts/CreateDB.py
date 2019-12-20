@@ -3,7 +3,7 @@ import pymongo
 #Creating the client from our Atlas MongoDB
 client = pymongo.MongoClient("mongodb+srv://Darien:test123@fitnesssystem-wtaxp.mongodb.net/test?retryWrites=true&w=majority")
 
-#test is the database_scripts on the cluster that we are inserting collections into (can also be done on Atlas interface)
+#test is the database on the cluster that we are inserting collections into (can also be done on Atlas interface)
 db = client.test
 
 workouts_collection = db['workouts']

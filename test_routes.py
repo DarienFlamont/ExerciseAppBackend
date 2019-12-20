@@ -1,5 +1,4 @@
-from flask import Blueprint
-from flask import jsonify
+from flask import Blueprint, jsonify
 from . import mongo
 
 test_routes = Blueprint('test_routes', __name__)

@@ -15,7 +15,8 @@ class Workout(MongoModel):
 	exercises = fields.EmbeddedDocumentListField('Exercise')
 
 class Exercise(EmbeddedMongoModel):
-	exercise_name = fields.CharField(max_lenght = 50)
+	exercise_name = fields.CharField(max_lenght = 50, primary_key = True)
+	exercise_classification = fields.CharField(max_lenght = 50)
 	reps = fields.IntgerField(min_value = 0, max_value = 20)
 	sets = fields.IntgerField(min_value = 0, max_value = 10)
 	weight = fields.IntgerField(min_value = 0, max_value = 1000)

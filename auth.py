@@ -1,5 +1,6 @@
 from flask import Blueprint, request, jsonify
 from . import mongo
+from .helpers import generate_password_hash, check_hashed_password
 
 auth = Blueprint("auth", __name__)
 
@@ -31,9 +32,10 @@ def signup_post():
         'email': email,
         'first_name': first_name,
         'last_name': last_name,
-        'password': password
+        'password': generate_password_hash(password)
     })
     return 'Signup successful'
+
 
 @auth.route('/logout')
 def logout():

@@ -44,19 +44,10 @@ def signup_post():
 
     # Create a user and write it to the db
     from .models import User
+    # TODO: Use a cached max current userID instead of count, this is vulnerable to deletes
     user_id = mongo.db.users.count()
-    # TODO: use pymodm MongoModel.save (user.save) to write to the db instead of insert_one
-    user = User(user_id, first_name, last_name, email, hashed_password, 0, 0)
-    user.clean_fields()
-    mongo.db.users.insert_one({
-        'user_id': user_id,
-        'first_name': first_name,
-        'last_name': last_name,
-        'email': email,
-        'hashed_password': hashed_password,
-        'height_inches': 0,
-        'weight_lbs': 0
-    })
+    # TODO: Height and weight
+    User(user_id, first_name, last_name, email, hashed_password, 0, 0).save()
     return 'Signup successful'
 
 

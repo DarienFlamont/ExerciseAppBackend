@@ -1,4 +1,4 @@
-#!/bin/bash
+::This batch file is to install all dependencies on a windows 10 machine (need python 3.6+ install and pip installed)
 
 python -m pip install pymongo
 python -m pip install dnspython

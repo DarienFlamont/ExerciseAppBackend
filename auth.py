@@ -43,6 +43,8 @@ def signup_post():
         return 'User already exists'
 
     # Create a user and write it to the db
+    from .models import User
+    user = User()
     mongo.db.users.insert_one({
         'email': email,
         'first_name': first_name,

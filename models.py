@@ -1,7 +1,8 @@
+from flask_login import UserMixin
 from pymodm import MongoModel, EmbeddedMongoModel, fields
 
 
-class User(MongoModel):
+class User(UserMixin, MongoModel):
 	user_id = fields.IntegerField(min_value=0, primary_key=True)
 	first_name = fields.CharField(max_length=50)
 	last_name = fields.CharField(max_length=50)

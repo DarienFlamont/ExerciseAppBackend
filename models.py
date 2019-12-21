@@ -1,4 +1,4 @@
-from pymodm import MongoModel, fields
+from pymodm import MongoModel, EmbeddedMongoModel, fields
 
 class User(MongoModel):
 	user_id = fields.IntegerField(min_value=0, primary_key=True)

@@ -1,5 +1,5 @@
-from flask import Blueprint, request
-from flask_login import login_user
+from flask import Blueprint, request, redirect, url_for
+from flask_login import login_user, logout_user, login_required
 from . import mongo
 from .models import User
 from .helpers import generate_password_hash, check_hashed_password
@@ -8,13 +8,13 @@ auth = Blueprint("auth", __name__)
 
 
 @auth.route('/login', methods=['POST'])
-def login():
+def post_login():
     data = request.get_json()
     email = data.get('email')
     password = data.get('password')
     # not exactly sure what we're remembering here, maybe something to do with the case
     # where the user closes the browser?
-    remember = True if data.get('remember') else False
+    # remember = True if data.get('remember') else False
 
     email_exists = mongo.db.user.count_documents({'email': email}) > 0
     user = None
@@ -24,7 +24,7 @@ def login():
         user_dict = mongo.db.user.find({'email': email})[0]
         hashed_password = user_dict.get('hashed_password')
         user = User(
-            id=user_dict.get('id'),
+            id=user_dict.get('_id'),
             first_name=user_dict.get('first_name'),
             last_name=user_dict.get('last_name'),
             email=user_dict.get('email'),
@@ -36,12 +36,12 @@ def login():
     if not email_exists or not check_hashed_password(password, hashed_password):
         return 'Login Failed, check email or password'
 
-    login_user(user, remember=remember)
-    return 'Login successful'
+    login_user(user, remember=True)
+    return redirect(url_for('test_routes.get_profile'))
 
 
 @auth.route('/signup', methods=['POST'])
-def signup_post():
+def post_signup():
     data = request.get_json()
     email = data.get('email')
     first_name = data.get('first_name')
@@ -72,9 +72,11 @@ def signup_post():
         height_inches=0,
         weight_lbs=0
     ).save()
-    return 'Signup successful'
+    return redirect(url_for('test_routes.get_signup_success'))
 
 
 @auth.route('/logout')
+@login_required
 def logout():
+    logout_user()
     return 'Logout'

@@ -1,5 +1,5 @@
-from flask_login import UserMixin
 from pymodm import MongoModel, EmbeddedMongoModel, fields, connect
+from flask_login import UserMixin
 
 connect('mongodb+srv://Darien:test123@fitnesssystem-wtaxp.mongodb.net/test?retryWrites=true&w=majority')
 
@@ -8,7 +8,7 @@ class User(UserMixin, MongoModel):
 	id = fields.IntegerField(min_value=0, primary_key=True)
 	first_name = fields.CharField(max_length=50)
 	last_name = fields.CharField(max_length=50)
-	email = fields.EmailField(unique=True)
+	email = fields.EmailField()
 	hashed_password = fields.CharField(max_length=256)
 	height_inches = fields.IntegerField(min_value=0, max_value=120)
 	weight_lbs = fields.IntegerField(min_value=0, max_value=600)

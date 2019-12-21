@@ -17,11 +17,11 @@ def create_app():
 	login_manager.login_view = 'auth.login'
 	login_manager.init_app(app)
 
-	from .models import User
-
+	# not sure exactly what this does yet
+	# got it from https://scotch.io/tutorials/authentication-and-authorization-with-flask-login
 	@login_manager.user_loader
 	def load_user(user_id):
-		return mongo.db.users.find({'user_id': user_id})
+		return mongo.db.user.find({'user_id': user_id})
 
 	from .auth import auth as auth_blueprint
 	app.register_blueprint(auth_blueprint)

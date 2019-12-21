@@ -5,9 +5,25 @@ from .helpers import generate_password_hash, check_hashed_password
 auth = Blueprint("auth", __name__)
 
 
-@auth.route('/login')
+@auth.route('/login', methods=['POST'])
 def login():
-    return 'Login'
+    data = request.get_json()
+    email = data.get('email')
+    password = data.get('password')
+    # not exactly sure what we're remembering here, maybe something to do with the case
+    # where the user closes the browser?
+    remember = True if data.get('remember') else False
+
+    email_exists = mongo.db.users.count_documents({'email': email}) > 0
+    hashed_password = ''
+    if email_exists:
+        # it's guaranteed to be there, but maybe there's a cleaner way to access the first one
+        hashed_password = mongo.db.users.find({'email': email})[0]['hashed_password']
+
+    if not email_exists or not check_hashed_password(password, hashed_password):
+        return 'Login Failed, check email or password'
+
+    return 'Login successful'
 
 
 @auth.route('/signup', methods=['POST'])
@@ -17,6 +33,7 @@ def signup_post():
     first_name = data.get('first_name')
     last_name = data.get('last_name')
     password = data.get('password')
+    hashed_password = generate_password_hash(password).decode()
 
     email_exists = mongo.db.users.count_documents({'email': email}) > 0
 
@@ -26,13 +43,11 @@ def signup_post():
         return 'User already exists'
 
     # Create a user and write it to the db
-    # TODO: Generate password hash
-    # TODO: Create MongoDB user model - Darien is doing this
     mongo.db.users.insert_one({
         'email': email,
         'first_name': first_name,
         'last_name': last_name,
-        'password': generate_password_hash(password)
+        'hashed_password': hashed_password
     })
     return 'Signup successful'
 

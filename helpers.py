@@ -8,4 +8,4 @@ def generate_password_hash(password):
 
 
 def check_hashed_password(password, hashed_password):
-    return checkpw(password, hashed_password)
+    return checkpw(password.encode('utf-8'), hashed_password.encode('utf-8'))

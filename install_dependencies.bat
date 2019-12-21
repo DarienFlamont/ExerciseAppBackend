@@ -7,3 +7,4 @@ python -m pip install Flask
 python -m pip install Flask_Pymongo
 python -m pip install Flask-Login
 python -m pip install bcrypt
+python -m pip install pymodm

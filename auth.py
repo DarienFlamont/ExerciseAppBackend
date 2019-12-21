@@ -1,4 +1,4 @@
-from flask import Blueprint, request, jsonify
+from flask import Blueprint, request
 from . import mongo
 from .helpers import generate_password_hash, check_hashed_password
 
@@ -44,12 +44,18 @@ def signup_post():
 
     # Create a user and write it to the db
     from .models import User
-
+    user_id = mongo.db.users.count()
+    # TODO: use pymodm MongoModel.save (user.save) to write to the db instead of insert_one
+    user = User(user_id, first_name, last_name, email, hashed_password, 0, 0)
+    user.clean_fields()
     mongo.db.users.insert_one({
-        'email': email,
+        'user_id': user_id,
         'first_name': first_name,
         'last_name': last_name,
-        'hashed_password': hashed_password
+        'email': email,
+        'hashed_password': hashed_password,
+        'height_inches': 0,
+        'weight_lbs': 0
     })
     return 'Signup successful'
 

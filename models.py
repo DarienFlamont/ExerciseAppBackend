@@ -1,5 +1,7 @@
 from flask_login import UserMixin
-from pymodm import MongoModel, EmbeddedMongoModel, fields
+from pymodm import MongoModel, EmbeddedMongoModel, fields, connect
+
+connect('mongodb+srv://Darien:test123@fitnesssystem-wtaxp.mongodb.net/test?retryWrites=true&w=majority')
 
 
 class User(UserMixin, MongoModel):
